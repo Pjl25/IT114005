@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+import java.lang.Integer;
 
 public class NumberGuesserHW {
 	private int level = 1;
@@ -32,6 +33,7 @@ public class NumberGuesserHW {
 		strikes = 0;
 		System.out.println("Welcome to level " + level);
 		number = getNumber(level);
+      saveLevel();
 	}
 
 	private void lose() {
@@ -42,12 +44,13 @@ public class NumberGuesserHW {
 		if (level < 1) {
 			level = 1;
 		}
+      number = getNumber(level);
 		saveLevel();
-		number = getNumber(level);
 	}
 
 	private void processCommands(String message) {
 		if (message.equalsIgnoreCase("quit")) {
+         saveLevel();
 			System.out.println("Tired of playing? No problem, see you next time.");
 			isRunning = false;
 		}
@@ -90,7 +93,7 @@ public class NumberGuesserHW {
 
 	private void saveLevel() {
 		try (FileWriter fw = new FileWriter(saveFile)) {
-			fw.write("" + level);// here we need to convert it to a String to record correctly
+			fw.write("" + level + "\n" + number + "\n" + strikes + "\n" + maxStrikes);// here we need to convert it to a String to record correctly
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,12 +106,18 @@ public class NumberGuesserHW {
 			return false;
 		}
 		try (Scanner reader = new Scanner(file)) {
-			while (reader.hasNextLine()) {
+			//while (reader.hasNextLine()) {
 				int _level = reader.nextInt();
+            int _number = reader.nextInt();
+            int _strikes = reader.nextInt();
+            int _maxStrikes = reader.nextInt();
 				if (_level > 1) {
 					level = _level;
-					break;
-				}
+               number = _number;
+               strikes = _strikes;
+               maxStrikes = _maxStrikes;
+					//break;
+				//}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -128,7 +137,7 @@ public class NumberGuesserHW {
 			if (loadLevel()) {
 				System.out.println("Successfully loaded level " + level + " let's continue then");
 			}
-			number = getNumber(level);
+			else number = getNumber(level); 
 			isRunning = true;
 			while (input.hasNext()) {
 				String message = input.nextLine();
