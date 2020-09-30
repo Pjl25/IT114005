@@ -12,7 +12,7 @@ public class NumberGuesserHW {
 	private int maxStrikes = 5;
 	private int number = 0;
 	private boolean isRunning = false;
-	final String saveFile = "numberGuesserSave.txt";
+	private static String saveFile = "numberGuesserSave.txt";
 
 	/***
 	 * Gets a random number between 1 and level.
@@ -27,12 +27,34 @@ public class NumberGuesserHW {
 	}
 
 	private void win() {
-		System.out.println("That's right!");
+      if (number == 69){
+         System.out.println("nice");
+      }
+      else{
+		   System.out.println("That's right!");
+      }
 		level++;// level up!
 		saveLevel();
 		strikes = 0;
-		System.out.println("Welcome to level " + level);
-		number = getNumber(level);
+      if (level == 69){
+         System.out.println("You made it to level 69! Nice.");
+         number = 69;
+      }
+      else if (level == 420){ //prints a weed leaf at level 420, because I am funny and also original.
+       System.out.println("        /\\ ");
+       System.out.println(" |\\    /  \\    /| ");
+       System.out.println(" | \\   \\  /   / | ");
+       System.out.println(" |  |  \\  /  |  | ");
+       System.out.println("  \\  \\ \\  / /  /  ");
+       System.out.println("|\\__\\ \\\\  // /__/|");
+       System.out.println(" \\___--    --___/ ");
+       System.out.println("     /_/||\\_\\     ");
+       System.out.println("        ||        ");
+      }
+      else{
+		   number = getNumber(level);
+      }
+      System.out.println("Welcome to level " + level);
       saveLevel();
 	}
 
@@ -53,6 +75,15 @@ public class NumberGuesserHW {
          saveLevel();
 			System.out.println("Tired of playing? No problem, see you next time.");
 			isRunning = false;
+      }
+      else if (message.equalsIgnoreCase("up up down down left right left right b a start")){
+         maxStrikes += 100;
+         System.out.println("Imanok grants you 100 more strikes");
+      }
+      else if (message.equalsIgnoreCase("cheats off")){
+      maxStrikes = 5;
+      strikes = 0;
+      System.out.println("cheats have been disabled, Strikes reset.");
 		}
 	}
 
@@ -105,7 +136,7 @@ public class NumberGuesserHW {
 		if (!file.exists()) {
 			return false;
 		}
-		try (Scanner reader = new Scanner(file)) {
+		try (Scanner reader = new Scanner(file)) { 
 			//while (reader.hasNextLine()) {
 				int _level = reader.nextInt();
             int _number = reader.nextInt();
@@ -156,7 +187,11 @@ public class NumberGuesserHW {
 	}
 
 	public static void main(String[] args) {
-		NumberGuesserHW guesser = new NumberGuesserHW();
+      Scanner nameyBoi = new Scanner(System.in);
+      System.out.println("What is your name? ");
+      String saveName = nameyBoi.nextLine();
+      saveFile = "NGS_" + saveName + ".txt";
+      NumberGuesserHW guesser = new NumberGuesserHW();
 		guesser.run();
 	}
 }
