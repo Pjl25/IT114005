@@ -30,6 +30,9 @@ public class NumberGuesserHW {
       if (number == 69){
          System.out.println("nice");
       }
+      else if (number == 420){
+         System.out.println("That's like... totally right, bro");
+      }
       else{
 		   System.out.println("That's right!");
       }
